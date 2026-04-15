@@ -17,7 +17,7 @@ const ExploreBtn = () => {
           alt='arrow-down'
           width={24}
           height={24}
-          style={{ width: "auto", height: "auto" }}
+          style={{ height: "auto" }}
         />
       </a>
     </button>
