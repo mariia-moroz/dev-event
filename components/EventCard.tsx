@@ -30,6 +30,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
           alt='location'
           width={14}
           height={14}
+          style={{ width: "auto", height: "auto" }}
         />
         <p>{location}</p>
       </div>
@@ -43,6 +44,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
             alt='date'
             width={14}
             height={14}
+            style={{ width: "auto", height: "auto" }}
           />
           <p>{date}</p>
         </div>
@@ -52,6 +54,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
             alt='time'
             width={14}
             height={14}
+            style={{ width: "auto", height: "auto" }}
           />
           <p>{time}</p>
         </div>
