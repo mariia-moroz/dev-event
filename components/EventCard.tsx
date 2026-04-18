@@ -8,9 +8,10 @@ interface Props {
   location: string;
   date: string;
   time: string;
+  loading?: "eager";
 }
 
-const EventCard = ({ title, image, slug, location, date, time }: Props) => {
+const EventCard = ({ title, image, slug, location, date, time, loading }: Props) => {
   return (
     <Link href={`/events/${slug}`} id='event-card'>
       <Image
@@ -18,6 +19,7 @@ const EventCard = ({ title, image, slug, location, date, time }: Props) => {
         alt={title}
         width={410}
         height={300}
+        loading={loading}
         className='poster'
         style={{ height: "auto" }}
       />
@@ -28,7 +30,6 @@ const EventCard = ({ title, image, slug, location, date, time }: Props) => {
           alt='location'
           width={14}
           height={14}
-          style={{ height: "auto" }}
         />
         <p>{location}</p>
       </div>
@@ -42,7 +43,6 @@ const EventCard = ({ title, image, slug, location, date, time }: Props) => {
             alt='date'
             width={14}
             height={14}
-            style={{ height: "auto" }}
           />
           <p>{date}</p>
         </div>
@@ -52,7 +52,6 @@ const EventCard = ({ title, image, slug, location, date, time }: Props) => {
             alt='time'
             width={14}
             height={14}
-            style={{ height: "auto" }}
           />
           <p>{time}</p>
         </div>
