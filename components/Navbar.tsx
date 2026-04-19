@@ -6,13 +6,7 @@ const Navbar = () => {
     <header>
       <nav>
         <Link href='/' className='logo'>
-          <Image
-            src='/icons/logo.png'
-            alt='logo'
-            height={24}
-            width={24}
-            style={{ width: 24, height: 24 }}
-          />
+          <Image src='/icons/logo.png' alt='logo' height={24} width={24} style={{ width: 24, height: 24 }} />
           <p>DevEvent</p>
         </Link>
         <ul>

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Event from "@/database/event.model";
 import { v2 as cloudinary } from "cloudinary";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     await connectDB();
 
@@ -42,15 +42,12 @@ export async function POST(req: NextRequest) {
 
     const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader
-        .upload_stream(
-          { resource_type: "image", folder: "DevEvent" },
-          (error, result) => {
-            if (error) {
-              return reject(error);
-            }
-            return resolve(result);
-          },
-        )
+        .upload_stream({ resource_type: "image", folder: "DevEvent" }, (error, result) => {
+          if (error) {
+            return reject(error);
+          }
+          return resolve(result);
+        })
         .end(buffer);
     });
 
@@ -77,17 +74,15 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     await connectDB();
 
     const events = await Event.find().sort({ createdAt: -1 });
 
-    return NextResponse.json(
-      { message: "Events fetched successfully", events },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: "Events fetched successfully", events }, { status: 200 });
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       {
         message: "Event fetching failed",
