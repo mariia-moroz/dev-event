@@ -1,5 +1,3 @@
-import React from "react";
-
 const EventTags = ({ tags }: { tags: string[] }) => {
   return (
     <div className='flex flex-row gap-1.5 flex-wrap'>

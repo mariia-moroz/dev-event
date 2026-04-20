@@ -1,16 +1,19 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import EventDetailsItem from "@/components/EvenDetailsItem";
 import EventAgenda from "@/components/EventAgenda";
 import EventTags from "@/components/EventTags";
 import BookEvent from "@/components/BookEvent";
-import { IEvent } from "@/database";
-import { getSimilarEventsBySlug } from "@/lib/actions/event.action";
-import EventCard from "@/components/EventCard";
+import SimilarEvents from "@/components/SimilarEvents";
+import { cacheLife } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  "use cache";
+  cacheLife("hours");
+
   const { slug } = await params;
 
   let event;
@@ -53,8 +56,6 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
   } = event;
 
   const bookings = 10;
-
-  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
 
   return (
     <section id='event'>
@@ -114,16 +115,27 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
         </aside>
       </div>
 
-      <div className='flex w-full flex-col gap-4 pt-20'>
-        <h2>Similar Events</h2>
-        <div className='events'>
-          {similarEvents.length > 0 &&
-            similarEvents.map((similarEvent: IEvent) => (
-              <EventCard key={similarEvent.slug} {...similarEvent} />
-            ))}
-        </div>
-      </div>
+      <Suspense fallback={<div>No events</div>}>
+        <SimilarEvents slug={slug} />
+      </Suspense>
     </section>
+  );
+};
+
+const EventDetailsPage = ({ params }: { params: Promise<{ slug: string }> }) => {
+  return (
+    <Suspense
+      fallback={
+        <section id='event'>
+          <div className='header'>
+            <h1>Loading event...</h1>
+            <p>Fetching event details.</p>
+          </div>
+        </section>
+      }
+    >
+      <EventDetailsContent params={params} />
+    </Suspense>
   );
 };
 

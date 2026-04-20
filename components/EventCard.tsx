@@ -8,13 +8,13 @@ interface Props {
   location: string;
   date: string;
   time: string;
-  loading?: "eager";
+  priority?: boolean;
 }
 
-const EventCard = ({ title, image, slug, location, date, time, loading }: Props) => {
+const EventCard = ({ title, image, slug, location, date, time, priority }: Props) => {
   return (
     <Link href={`/events/${slug}`} id='event-card'>
-      <Image src={image} alt={title} width={410} height={300} loading={loading} className='poster h-auto' />
+      <Image src={image} alt={title} width={410} height={300} priority={priority} className='poster h-auto' />
 
       <div className='flex flex-row gap-2'>
         <Image
