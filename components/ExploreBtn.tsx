@@ -12,7 +12,7 @@ const ExploreBtn = () => {
           alt='arrow-down'
           width={24}
           height={24}
-          style={{ width: "auto", height: "auto" }}
+          className='h-[24px] w-[24px] shrink-0'
         />
       </a>
     </button>
