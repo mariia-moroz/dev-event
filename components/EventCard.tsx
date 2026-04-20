@@ -14,15 +14,7 @@ interface Props {
 const EventCard = ({ title, image, slug, location, date, time, loading }: Props) => {
   return (
     <Link href={`/events/${slug}`} id='event-card'>
-      <Image
-        src={image}
-        alt={title}
-        width={410}
-        height={300}
-        loading={loading}
-        className='poster'
-        style={{ height: "auto" }}
-      />
+      <Image src={image} alt={title} width={410} height={300} loading={loading} className='poster h-auto' />
 
       <div className='flex flex-row gap-2'>
         <Image
@@ -30,7 +22,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
           alt='location'
           width={14}
           height={14}
-          style={{ width: "auto", height: "auto" }}
+          className='h-[14px] w-[14px] shrink-0'
         />
         <p>{location}</p>
       </div>
@@ -44,7 +36,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
             alt='date'
             width={14}
             height={14}
-            style={{ width: "auto", height: "auto" }}
+            className='h-[14px] w-[14px] shrink-0'
           />
           <p>{date}</p>
         </div>
@@ -54,7 +46,7 @@ const EventCard = ({ title, image, slug, location, date, time, loading }: Props)
             alt='time'
             width={14}
             height={14}
-            style={{ width: "auto", height: "auto" }}
+            className='h-[14px] w-[14px] shrink-0'
           />
           <p>{time}</p>
         </div>
