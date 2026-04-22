@@ -140,7 +140,7 @@ const EventDetailsPage = ({ params }: { params: Promise<{ slug: string }> }) => 
         <section id='event'>
           <div className='header'>
             <h1>Loading event...</h1>
-            <p>Fetching event details.</p>
+            <p>Fetching event details</p>
           </div>
         </section>
       }
