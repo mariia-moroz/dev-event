@@ -7,8 +7,27 @@ import EventTags from "@/components/EventTags";
 import BookEvent from "@/components/BookEvent";
 import SimilarEvents from "@/components/SimilarEvents";
 import { cacheLife } from "next/cache";
+import { getBookingsCountByEventId } from "@/lib/actions/booking.action";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const BookingSidebar = async ({ eventId, slug }: { eventId: string; slug: string }) => {
+  const { success, bookingsCount } = await getBookingsCountByEventId({ eventId });
+  const count = success ? bookingsCount : 0;
+
+  return (
+    <div className='signup-card'>
+      <h2>Book Your Spot</h2>
+      {count > 0 ? (
+        <p className='text-sm'>Join {count} people who have already booked their spot!</p>
+      ) : (
+        <p className='text-sm'>Be the first to boor your spot!</p>
+      )}
+
+      <BookEvent eventId={eventId} slug={slug} />
+    </div>
+  );
+};
 
 const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string }> }) => {
   "use cache";
@@ -41,6 +60,7 @@ const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string 
   }
 
   const {
+    _id,
     title,
     description,
     image,
@@ -54,8 +74,6 @@ const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string 
     organiser,
     tags,
   } = event;
-
-  const bookings = 10;
 
   return (
     <section id='event'>
@@ -102,16 +120,9 @@ const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string 
 
         {/* Right Side - Booking Form */}
         <aside className='booking'>
-          <div className='signup-card'>
-            <h2>Book Your Spot</h2>
-            {bookings > 0 ? (
-              <p className='text-sm'>Join {bookings} people who have already booked their spot!</p>
-            ) : (
-              <p className='text-sm'>Be the first to boor your spot!</p>
-            )}
-
-            <BookEvent />
-          </div>
+          <Suspense fallback={<div className='signup-card'>Loading bookings...</div>}>
+            <BookingSidebar eventId={_id} slug={slug} />
+          </Suspense>
         </aside>
       </div>
 
